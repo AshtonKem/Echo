@@ -1,4 +1,4 @@
-(defproject AshtonKem/echo "0.1.0-SNAPSHOT"
+(defproject ashtonkemerling/echo "0.1.0-SNAPSHOT"
   :description "Record test Ajax requests for documentation usage"
   :url "http://github.com/AshtonKem/echo"
   :license {:name "Eclipse Public License"
