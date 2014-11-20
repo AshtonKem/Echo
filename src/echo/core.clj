@@ -5,4 +5,11 @@
 (def ^:dynamic *canonical-example* nil)
 
 (defn echo [handler request]
-  (handler request))
+  (let [result (handler request)]
+    (when-not (nil? *canonical-example*)
+      (swap! requests assoc *canonical-example* {:request request :response result}))
+    result))
+
+(defmacro canonical-example-for [name & body]
+  `(binding [*canonical-example* ~name]
+     ~@body))

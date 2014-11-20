@@ -9,4 +9,9 @@
       (is (= @state true))))
   (testing "Records nothing when not in a canonical example"
     (echo identity {})
-    (is (= {} @requests))))
+    (is (= {} @requests)))
+  (testing "Records changes with canonical-example"
+    (canonical-example-for "foo"
+                           (echo identity {:bar "baz"}))
+    (is (= {"foo" {:request {:bar "baz"}
+                   :response {:bar "baz"}}} @requests))))
