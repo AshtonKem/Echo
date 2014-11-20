@@ -1,6 +1,8 @@
 (ns echo.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def requests (atom {}))
+
+(def ^:dynamic *canonical-example* nil)
+
+(defn echo [handler request]
+  (handler request))
