@@ -13,3 +13,9 @@
 (defmacro canonical-example-for [name & body]
   `(binding [*canonical-example* ~name]
      ~@body))
+
+(defn reset-canonical-examples!
+  ([] (reset-canonical-examples! (fn [])))
+  ([f]
+    (reset! requests {})
+    (f)))
