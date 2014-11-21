@@ -4,9 +4,13 @@
             [clojure.pprint :refer [pprint]]))
 
 (defn store-edn [prefix]
-  (doall (map (fn [[sample-name values]]
-                (let [filename (str prefix "/" (name sample-name) ".request")]
-                  (make-parents filename)
-                  (with-open [wrtr (writer filename)]
-                    (.write wrtr (with-out-str (pprint values))))))
-              @requests)))
+  (let [names (atom {})]
+    (doall (map (fn [[sample-name values]]
+                  (let [filename (str prefix "/" (name sample-name) ".edn")]
+                    (swap! names assoc sample-name filename)
+                    (make-parents filename)
+                    (with-open [wrtr (writer filename)]
+                      (.write wrtr (with-out-str (pprint values))))))
+                @requests))
+    (with-open [wrtr (writer (str prefix "/summary.edn"))]
+      (.write wrtr (with-out-str (pprint @names))))))
