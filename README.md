@@ -2,7 +2,7 @@
 
 A Clojure library designed to for recording HTTP requests performed by your tests for use in API documentation.
 
-[![Clojars Project](http://clojars.org/ashtonkemerling/echo/latest-version.svg)]
+![Clojars Project](http://clojars.org/ashtonkemerling/echo/latest-version.svg)
 
 ## Usage
 
