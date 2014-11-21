@@ -1,6 +1,7 @@
 (ns echo.core-test
   (:require [clojure.test :refer :all]
-            [echo.core :refer :all]))
+            [echo.core :refer :all]
+            [ring.mock.request :refer :all]))
 
 (use-fixtures :each reset-canonical-examples!)
 
@@ -16,13 +17,14 @@
 
 (deftest recording-test
   (testing "Records nothing when not in a canonical example"
-    (echo identity {})
+    (echo identity (request :post "/foo"))
     (is (= {} @requests)))
   (testing "Records changes with canonical-example"
     (canonical-example-for "foo"
-                           (echo identity {:bar "baz"}))
-    (is (= {"foo" {:request {:bar "baz"}
-                   :response {:bar "baz"}}} @requests)))
+                           (echo identity (request :get "/foo/bar")))
+    (is (= {"foo" {:request (request :get "/foo/bar")
+                   :response (request :get "/foo/bar")}}
+           @requests)))
   (testing "reset-canonical-examples!"
     (reset-canonical-examples!)
     (is (= {} @requests))))
